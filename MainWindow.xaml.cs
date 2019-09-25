@@ -17,9 +17,90 @@ namespace lightsout2 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window {
+        private LightsOutGame game;
         public MainWindow() {
             InitializeComponent();
+
+            game = new LightsOutGame();
+            CreateGrid();
+            DrawGrid();
+        }
+
+        private void CreateGrid() {
+            int rectSize = (int)boardCanvas.Width / game.GridSize;
+
+            for (int r = 0; r < game.GridSize; r++) {
+                for (int c = 0; c < game.GridSize; c++) {
+                    Rectangle rect = new Rectangle();
+                    rect.Fill = Brushes.White;
+                    rect.Width = rectSize + 1;
+                    rect.Height = rect.Width + 1;
+                    rect.Stroke = Brushes.Black;
+
+                    rect.Tag = new Point(r, c);
+
+                    rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
+
+                    Canvas.SetTop(rect, r * rectSize);
+                    Canvas.SetLeft(rect, c * rectSize);
+
+                    boardCanvas.Children.Add(rect);
+                }
+            }
+        }
+
+        private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            Rectangle rect = sender as Rectangle;
+            var rowCol = (Point)rect.Tag;
+            int row = (int)rowCol.X;
+            int col = (int)rowCol.Y;
+
+            game.Move(row, col);
+
+            DrawGrid();
+
+            if (game.IsGameOver()) {
+                MessageBox.Show("You've won!");
+                game.NewGame();
+                DrawGrid();
+            }
+
+            e.Handled = true;
+        }
+
+        private void DrawGrid() {
+            int index = 0;
+
+            for (int r = 0; r < game.GridSize; r++) {
+                for (int c = 0; c < game.GridSize; c++) {
+                    Rectangle rect = boardCanvas.Children[index] as Rectangle;
+                    index++;
+
+                    if (game.GetGridValue(r,c)) {
+                        rect.Fill = Brushes.White;
+                        rect.Stroke = Brushes.Black;
+                    } else {
+                        rect.Fill = Brushes.Black;
+                        rect.Stroke = Brushes.White;
+                    }
+                }
+            }
+        }
+
+        private void btnNewGame_Click(object sender, RoutedEventArgs e) {
+            game.NewGame();
+            DrawGrid();
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
+            Close();
+        }
+
+        private void menuAbout_Click(object sender, RoutedEventArgs e) {
+            AboutWindow about = new AboutWindow();
+            about.ShowDialog();
         }
     }
 }

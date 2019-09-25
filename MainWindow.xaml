@@ -5,4 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lightsout2"
         mc:Ignorable="d"
-        Title="Lights Out!" Height="350" Width="300"/>
+        Title="Lights Out!" Height="400" Width="300" WindowStartupLocation="CenterScreen" Icon="icon.ico">
+    <Grid HorizontalAlignment="Left" Margin="0,0,-5,0" VerticalAlignment="Top">
+        <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="295">
+            <MenuItem Header="Game">
+                <MenuItem Header="New" Click="btnNewGame_Click"/>
+                <MenuItem Header="Exit" Click="btnExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Click="menuAbout_Click"/>
+            </MenuItem>
+        </Menu>
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="210,340,0,0" VerticalAlignment="Top" Width="75" Click="btnExit_Click"/>
+        <Button x:Name="btnNewGame" Content="New Game" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top" Width="75" Click="btnNewGame_Click"/>
+        <Canvas x:Name="boardCanvas" HorizontalAlignment="Left" Height="275" Margin="10,25,0,0" VerticalAlignment="Top" Width="275" Background="#FFC7C7C7"/>
+    </Grid>
+</Window>
