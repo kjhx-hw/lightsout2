@@ -5,11 +5,6 @@ VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lightsout2", "lightsout2.csproj", "{E7BBDB02-614B-4985-9785-F8835B74DDF9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3FB12A49-F385-47E9-AAA4-BDE9485F9433}"
-	ProjectSection(SolutionItems) = preProject
-		docs\img\icon.ico = docs\img\icon.ico
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -63,8 +63,8 @@ namespace lightsout2 {
 
             if (game.IsGameOver()) {
                 MessageBox.Show("You've won!");
-                game.NewGame();
-                DrawGrid();
+                // game.NewGame();
+                // DrawGrid();
             }
 
             e.Handled = true;
@@ -89,18 +89,32 @@ namespace lightsout2 {
             }
         }
 
-        private void btnNewGame_Click(object sender, RoutedEventArgs e) {
+        private void AboutCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+            AboutWindow about = new AboutWindow();
+            about.ShowDialog();
+        }
+
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             game.NewGame();
             DrawGrid();
         }
 
-        private void btnExit_Click(object sender, RoutedEventArgs e) {
+        private void CloseCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             Close();
         }
 
-        private void menuAbout_Click(object sender, RoutedEventArgs e) {
-            AboutWindow about = new AboutWindow();
-            about.ShowDialog();
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (e.ChangedButton == MouseButton.Left) {
+                this.DragMove();
+            }
+        }
+
+        private void CloseCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            try {
+                e.CanExecute = game.IsGameOver();
+            } catch (Exception) {
+                e.CanExecute = false;
+            }
         }
     }
 }

@@ -5,19 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lightsout2"
         mc:Ignorable="d"
-        Title="Lights Out!" Height="400" Width="300" WindowStartupLocation="CenterScreen" Icon="icon.ico">
-    <Grid HorizontalAlignment="Left" Margin="0,0,-5,0" VerticalAlignment="Top">
-        <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="295">
-            <MenuItem Header="Game">
-                <MenuItem Header="New" Click="btnNewGame_Click"/>
-                <MenuItem Header="Exit" Click="btnExit_Click"/>
-            </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="About" Click="menuAbout_Click"/>
-            </MenuItem>
-        </Menu>
-        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="210,340,0,0" VerticalAlignment="Top" Width="75" Click="btnExit_Click"/>
-        <Button x:Name="btnNewGame" Content="New Game" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top" Width="75" Click="btnNewGame_Click"/>
-        <Canvas x:Name="boardCanvas" HorizontalAlignment="Left" Height="275" Margin="10,25,0,0" VerticalAlignment="Top" Width="275" Background="#FFC7C7C7"/>
+        Title="Lights Out!" Height="604.396" Width="369.597" WindowStartupLocation="CenterScreen" Icon="icon.ico" ResizeMode="CanMinimize" WindowStyle="None" AllowsTransparency="True" MouseDown="Window_MouseDown">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="AboutCommand_Executed" />
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewCommand_Executed" />
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommand_Executed" CanExecute="CloseCommand_CanExecute" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <ControlTemplate x:Key="MyButtonTemplate" TargetType="Button">
+            <Border Name="Border" BorderThickness="2" CornerRadius="10"
+                BorderBrush="Orange" Background="Black">
+                <ContentPresenter HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              TextBlock.FontWeight="Bold"  
+                              TextBlock.Foreground="White"
+                              Content="{TemplateBinding Content}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Trigger.Setters>
+                        <Setter TargetName="Border" Property="Opacity" Value="0.5" />
+                    </Trigger.Setters>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.Setters>
+                        <Setter TargetName="Border" Property="Opacity" Value="0.8" />
+                        <Setter TargetName="Border" Property="Background" Value="DarkGray" />
+                    </Trigger.Setters>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Trigger.Setters>
+                        <Setter TargetName="Border" Property="Opacity" Value="0.5" />
+                        <Setter TargetName="Border" Property="Background" Value="Red" />
+                    </Trigger.Setters>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="mccown.png" />
+    </Window.Background>
+    <Grid HorizontalAlignment="Center" Margin="0,0,-5,0" VerticalAlignment="Center">
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="210,340,0,0" VerticalAlignment="Top" Width="75" Command="ApplicationCommands.Close" Template="{StaticResource MyButtonTemplate}" />
+        <Button x:Name="btnNewGame" Content="New Game" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top" Width="75" Command="ApplicationCommands.New" Template="{StaticResource MyButtonTemplate}" />
+        <Canvas x:Name="boardCanvas" HorizontalAlignment="Left" Height="275" Margin="10,0,0,200" VerticalAlignment="Top" Width="275" Background="#FFC7C7C7"/>
+        <Button Content="?" HorizontalAlignment="Left" Margin="109,340,0,0" VerticalAlignment="Top" Width="75" Command="ApplicationCommands.Help" Template="{StaticResource MyButtonTemplate}" />
     </Grid>
 </Window>
